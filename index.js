@@ -1,11 +1,11 @@
+require("dotenv").config();
 const express = require("express");
-const config = require("./config");
 const Twit = require("twit");
 
-const consumer_key = config.consumer_key;
-const consumer_secret = config.consumer_secret;
-const access_token = config.access_token;
-const access_token_secret = config.access_token_secret;
+const consumer_key = process.env.CONSUMER_KEY;
+const consumer_secret = process.env.CONSUMER_SECRET;
+const access_token = process.env.ACCESS_TOKEN;
+const access_token_secret = process.env.ACCESS_TOKEN_SECRET;
 
 const app = express();
 
@@ -16,7 +16,7 @@ const T = new Twit({
   access_token_secret,
 });
 
-// Define a route to retrieve tweets
+//Query sample: localhost:3000/tweets/somepost
 app.get("/tweets/:searchTerm", async (req, res) => {
   try {
     const { searchTerm } = req.params;
@@ -30,8 +30,4 @@ app.get("/tweets/:searchTerm", async (req, res) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
-
-//Query example: localhost:3000/tweets/somepost
+app.listen(port);
