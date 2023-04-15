@@ -20,7 +20,7 @@ const T = new Twit({
 app.get("/tweets/:searchTerm", async (req, res) => {
   try {
     const { searchTerm } = req.params;
-    const result = await T.get("search/tweets", { q: searchTerm });
+    const result = await T.get("search/tweets/recent", { q: searchTerm });
     res.send(result.data);
   } catch (error) {
     console.error(error);
@@ -30,4 +30,6 @@ app.get("/tweets/:searchTerm", async (req, res) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port);
+app.listen(port, () => {
+  console.log("Web service started on port 3000");
+});
