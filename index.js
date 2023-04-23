@@ -18,11 +18,23 @@ const T = new Twit({
   access_token_secret,
 });
 
+app.get("/checklimit", async (req, res) => {
+  try {
+    const result = await T.get(
+      "application/rate_limit_status.json?resources=search"
+    );
+    res.send(result);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 //Query sample: localhost:3000/tweets/somepost
 app.get("/tweets/:searchTerm", async (req, res) => {
   try {
     const { searchTerm } = req.params;
     const result = await T.get("search/tweets/recent", { q: searchTerm });
+
     res.send(result.data);
   } catch (error) {
     console.error(error);
@@ -33,5 +45,5 @@ app.get("/tweets/:searchTerm", async (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log("Web service started on port 3000");
+  console.log(`Web service started on port ${port}`);
 });
