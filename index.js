@@ -33,8 +33,7 @@ app.get("/checklimit", async (req, res) => {
 app.get("/tweets/:searchTerm", async (req, res) => {
   try {
     const { searchTerm } = req.params;
-    const result = await T.get("search/tweets/recent", { q: searchTerm });
-
+    const result = await T.get("search/tweets", { q: searchTerm });
     res.send(result.data);
   } catch (error) {
     console.error(error);
